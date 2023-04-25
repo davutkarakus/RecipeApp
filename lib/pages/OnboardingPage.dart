@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/entity/Onboard.dart';
+import 'package:flutter_recipe_app/pages/MainPage.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -59,10 +60,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       height: 60,
                       child: ElevatedButton(
                         onPressed: () {
-                          _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+                          if(_pageIndex == 2) {
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage()));
+                          }else {
+                            _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+                          }
                         },
                         style: ElevatedButton.styleFrom(shape: const CircleBorder()),
-                        child: Icon(Icons.arrow_forward_rounded,color: Colors.white,),
+                        child: const Icon(Icons.arrow_forward_rounded,color: Colors.white,),
                       ),
                     ),
                   ],

@@ -36,6 +36,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   controller: _pageController,
                   onPageChanged: (index) {
                     setState(() {
+                      print(index);
                       _pageIndex = index;
                     });
                   },

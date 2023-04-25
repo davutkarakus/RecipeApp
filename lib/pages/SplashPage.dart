@@ -27,7 +27,7 @@ class _SplashPageState extends State<SplashPage> {
             fit: BoxFit.cover
           ),
         ),
-        child: Opacity(opacity:0.7,child: ClipRRect(borderRadius:BorderRadius.circular(135),child: SizedBox(height:270,width:270,child: Image.asset("images/iconApp.png",)))),
+        child: Opacity(opacity:1,child: ClipRRect(borderRadius:BorderRadius.circular(50),child: SizedBox(height:350,width:350,child: Image.asset("images/appIcon.png",)))),
       ),
     );
   }

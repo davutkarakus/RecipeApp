@@ -40,6 +40,21 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_native_splash:
+  flutter_launcher_icons: "^0.7.0"
+
+flutter_native_splash:
+  color: "#42a5f5"
+  android: false
+  ios: false
+  android_gravity: center
+  android_fullscreen: true
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "images/iosIcon.png"
+  image_path_android: "images/androidIcon.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

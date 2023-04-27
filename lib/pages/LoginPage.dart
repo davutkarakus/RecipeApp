@@ -17,6 +17,8 @@ class _LoginPageState extends State<LoginPage> {
   bool _checked = false;
   var emailTextController = TextEditingController();
   var passwordTextController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   @override
   void dispose() {
     emailTextController.dispose();
@@ -51,6 +53,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
         ),
         child: Form(
+          key: _formKey,
           child: SingleChildScrollView(
             child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
               Padding(
@@ -62,32 +65,37 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.only(left: 50, right: 50,top: 17),
                 child: Opacity(
                   opacity: 0.9,
-                  child: SizedBox(
-                    height: 55,
-                    child: TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: emailTextController,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400),
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.email_outlined,
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                        border: UnderlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(15)),
-                        filled: true,
-                        fillColor: textFieldColor,
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(15)),
-                        labelText: "Email",
-                        labelStyle: TextStyle(color: Colors.white),
+                  child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    controller: emailTextController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your e-mail address';
+                      }
+                      return null;
+                    },
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400),
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.email_outlined,
+                        color: Colors.white,
+                        size: 18,
                       ),
+                      border: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(15)),
+                      filled: true,
+                      fillColor: textFieldColor,
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(15)),
+                      labelText: "Email",
+                      contentPadding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                      labelStyle: TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
@@ -97,40 +105,45 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.only(left: 50, right: 50,top: 25),
                 child: Opacity(
                   opacity: 0.9,
-                  child: SizedBox(
-                    height: 55,
-                    child: TextFormField(
-                      controller: passwordTextController,
-                      obscureText: true,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400),
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.lock_outline,
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.remove_red_eye),
-                          color: Colors.white,
-                          iconSize: 18,
-                          onPressed: (() {
-                            print("şifre göster gizle");
-                          }),
-                        ),
-                        border: UnderlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(15)),
-                        filled: true,
-                        fillColor: textFieldColor,
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(15)),
-                        labelText: "Password",
-                        labelStyle: TextStyle(color: Colors.white),
+                  child: TextFormField(
+                    controller: passwordTextController,
+                    obscureText: true,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      return null;
+                    },
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400),
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.lock_outline,
+                        color: Colors.white,
+                        size: 18,
                       ),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.remove_red_eye),
+                        color: Colors.white,
+                        iconSize: 18,
+                        onPressed: (() {
+                          print("şifre göster gizle");
+                        }),
+                      ),
+                      border: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(15)),
+                      filled: true,
+                      fillColor: textFieldColor,
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(15)),
+                      labelText: "Password",
+                      contentPadding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                      labelStyle: TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
@@ -180,7 +193,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 50, right: 50,top: 33),
+                padding: const EdgeInsets.only(left: 50, right: 50,top: 40),
                 child: SizedBox(
                   width: double.infinity,
                   height: 50,
@@ -188,14 +201,16 @@ class _LoginPageState extends State<LoginPage> {
                     opacity: 0.9,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-
                             backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
                         ),
                         onPressed: (){
-                          logIn();
+                          if(_formKey.currentState!.validate()) {
+                            logIn();
+                          }
+
                         },
                         child: Text("LOG IN",style: TextStyle(color: Colors.black,fontSize: 16),)
                     ),

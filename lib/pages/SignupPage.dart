@@ -19,6 +19,7 @@ class _SignupPageState extends State<SignupPage> {
   var passwordTextController = TextEditingController();
   var confirmPwTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
   Future<void> signUp() async {
     showDialog(
         context: context,
@@ -68,8 +69,7 @@ class _SignupPageState extends State<SignupPage> {
                 padding: const EdgeInsets.only(left: 50, right: 50,top: 17),
                 child: Opacity(
                   opacity: 0.9,
-                  child: SizedBox(
-                    height: 55,
+                  child: Container(
                     child: TextFormField(
                       controller: usernameTextController,
                       validator: (value) {
@@ -97,7 +97,8 @@ class _SignupPageState extends State<SignupPage> {
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(15)),
                         labelText: "Username",
-                        contentPadding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 10.0),
+                        contentPadding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                         labelStyle: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -108,38 +109,37 @@ class _SignupPageState extends State<SignupPage> {
                 padding: const EdgeInsets.only(left: 50, right: 50,top: 25),
                 child: Opacity(
                   opacity: 0.9,
-                  child: SizedBox(
-                    height: 55,
-                    child: TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your e-mail address';
-                        }
-                        return null;
-                      },
-                      controller: emailTextController,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400),
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.mail_outline,
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                        border: UnderlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(15)),
-                        filled: true,
-                        fillColor: textFieldColor,
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(15)),
-                        labelText: "Email",
-                        labelStyle: TextStyle(color: Colors.white),
+                  child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your e-mail address';
+                      }
+                      return null;
+                    },
+                    controller: emailTextController,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400),
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.mail_outline,
+                        color: Colors.white,
+                        size: 18,
                       ),
+                      border: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(15)),
+                      filled: true,
+                      fillColor: textFieldColor,
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(15)),
+                      labelText: "Email",
+                      contentPadding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                      labelStyle: TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
@@ -148,46 +148,45 @@ class _SignupPageState extends State<SignupPage> {
                 padding: const EdgeInsets.only(left: 50, right: 50,top: 25),
                 child: Opacity(
                   opacity: 0.9,
-                  child: SizedBox(
-                    height: 55,
-                    child: TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        return null;
-                      },
-                      controller: passwordTextController,
-                      obscureText: true,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400),
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.lock_outlined,
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.remove_red_eye),
-                          color: Colors.white,
-                          iconSize: 18,
-                          onPressed: (() {
-                            print("şifre göster gizle");
-                          }),
-                        ),
-                        border: UnderlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(15)),
-                        filled: true,
-                        fillColor: textFieldColor,
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(15)),
-                        labelText: "Password",
-                        labelStyle: TextStyle(color: Colors.white),
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      return null;
+                    },
+                    controller: passwordTextController,
+                    obscureText: true,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400),
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.lock_outlined,
+                        color: Colors.white,
+                        size: 18,
                       ),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.remove_red_eye),
+                        color: Colors.white,
+                        iconSize: 18,
+                        onPressed: (() {
+                          print("şifre göster gizle");
+                        }),
+                      ),
+                      border: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(15)),
+                      filled: true,
+                      fillColor: textFieldColor,
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(15)),
+                      labelText: "Password",
+                      contentPadding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                      labelStyle: TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
@@ -196,52 +195,51 @@ class _SignupPageState extends State<SignupPage> {
                 padding: const EdgeInsets.only(left: 50, right: 50,top: 25),
                 child: Opacity(
                   opacity: 0.9,
-                  child: SizedBox(
-                    height: 55,
-                    child: TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter confirm your password';
-                        }
-                        return null;
-                      },
-                      controller: confirmPwTextController,
-                      obscureText: true,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400),
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.lock_outlined,
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.remove_red_eye),
-                          color: Colors.white,
-                          iconSize: 18,
-                          onPressed: (() {
-                            print("şifre göster gizle");
-                          }),
-                        ),
-                        border: UnderlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(15)),
-                        filled: true,
-                        fillColor: textFieldColor,
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(15)),
-                        labelText: "Confirm Password",
-                        labelStyle: TextStyle(color: Colors.white),
+                  child: TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter confirm your password';
+                      }
+                      return null;
+                    },
+                    controller: confirmPwTextController,
+                    obscureText: true,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400),
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.lock_outlined,
+                        color: Colors.white,
+                        size: 18,
                       ),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.remove_red_eye),
+                        color: Colors.white,
+                        iconSize: 18,
+                        onPressed: (() {
+                          print("şifre göster gizle");
+                        }),
+                      ),
+                      border: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(15)),
+                      filled: true,
+                      fillColor: textFieldColor,
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(15)),
+                      labelText: "Confirm Password",
+                      contentPadding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                      labelStyle: TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 50, right: 50,top: 40),
+                padding: const EdgeInsets.only(left: 50, right: 50,top: 50),
                 child: SizedBox(
                   width: double.infinity,
                   height: 50,
@@ -249,7 +247,6 @@ class _SignupPageState extends State<SignupPage> {
                     opacity: 0.9,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-
                           backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),

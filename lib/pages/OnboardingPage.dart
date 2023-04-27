@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/entity/Onboard.dart';
 import 'package:flutter_recipe_app/pages/LoginPage.dart';
+import 'package:flutter_recipe_app/pages/MainPage.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -61,7 +63,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       child: ElevatedButton(
                         onPressed: () {
                           if(_pageIndex == 2) {
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                            if(FirebaseAuth.instance.currentUser == null) {
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                            }else {
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage()));
+                            }
                           }else {
                             _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
                           }
@@ -121,7 +127,7 @@ class OnboardingContent extends StatelessWidget {
         const Spacer(),
         Text(title,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline5!.copyWith(fontWeight: FontWeight.w600),
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontWeight: FontWeight.w600),
         ),
         SizedBox(height: 10,),
         Text(description,

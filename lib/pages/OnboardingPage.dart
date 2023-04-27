@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/entity/Onboard.dart';
-import 'package:flutter_recipe_app/pages/MainPage.dart';
+import 'package:flutter_recipe_app/pages/LoginPage.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -61,7 +61,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       child: ElevatedButton(
                         onPressed: () {
                           if(_pageIndex == 2) {
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage()));
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
                           }else {
                             _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
                           }

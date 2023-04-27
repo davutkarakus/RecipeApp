@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/constant/colors.dart';
 import 'package:flutter_recipe_app/pages/ForgotPasswordPage.dart';
@@ -182,7 +183,7 @@ class _LoginPageState extends State<LoginPage> {
                   Text("Don't have an account ?",style: TextStyle(color: Colors.white,fontSize: 14),),
                   TextButton(
                       onPressed: (){
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignupPage()));
+                        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => SignupPage()));
                       },
                       child: Text("Sign Up",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 17),)
                   ),

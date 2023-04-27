@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/constant/colors.dart';
+import 'package:flutter_recipe_app/pages/ForgotPasswordPage.dart';
 import 'package:flutter_recipe_app/pages/SignupPage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -143,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextButton(
                       onPressed: (){
-                        print("Forgot password tıklandı");
+                        Navigator.push(context,MaterialPageRoute(builder: (context) => ForgotPasswordPage(),fullscreenDialog: true));
                       },
                       child: Text("Forgot Password?",style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
                   )

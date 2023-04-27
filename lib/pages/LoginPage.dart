@@ -210,7 +210,6 @@ class _LoginPageState extends State<LoginPage> {
                           if(_formKey.currentState!.validate()) {
                             logIn();
                           }
-
                         },
                         child: Text("LOG IN",style: TextStyle(color: Colors.black,fontSize: 16),)
                     ),

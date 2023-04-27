@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../constant/colors.dart';
@@ -10,6 +11,15 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+  final _formKey = GlobalKey<FormState>();
+  var emailTextController = TextEditingController();
+  Future<void> resetPassword() async {
+    try {
+     await FirebaseAuth.instance.sendPasswordResetEmail(email: emailTextController.text);
+    }on FirebaseAuthException catch(e) {
+      print(e);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,13 +51,21 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   style: TextStyle(color: Colors.white,fontSize: 15,),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 50, right: 50,top: 20),
-                child: Opacity(
-                  opacity: 0.9,
-                  child: SizedBox(
-                    height: 55,
+              Form(
+                key: _formKey,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 50, right: 50,top: 20),
+                  child: Opacity(
+                    opacity: 0.9,
                     child: TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: emailTextController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your e-mail address';
+                        }
+                        return null;
+                      },
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 15,
@@ -68,6 +86,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             borderRadius: BorderRadius.circular(15)),
                         hintText: "example@gmail.com",
                         labelText: "Email",
+                        contentPadding:
+                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
                         labelStyle: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -90,7 +110,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           ),
                         ),
                         onPressed: (){
-                          print("Password reset button tıklandı");
+                          if(_formKey.currentState!.validate()) {
+                            resetPassword();
+                          }
                         },
                         child: Text("SUBMIT",style: TextStyle(color: Colors.black,fontSize: 16),)
                     ),

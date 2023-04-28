@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/pages/LoginPage.dart';
+import 'package:flutter_recipe_app/shared/custom-widgets/CustomShowDialog.dart';
 import 'package:flutter_recipe_app/shared/custom-widgets/customTextField.dart';
 
 import '../constant/colors.dart';
@@ -35,22 +36,7 @@ class _SignupPageState extends State<SignupPage> {
      await  FirebaseAuth.instance.signOut();
     }on FirebaseAuthException catch(e) {
       Navigator.pop(context);
-      showDialog(
-          context: context,
-          builder: (BuildContext context){
-            return AlertDialog(
-              title: Text("Error"),
-              content: Text("${e.message}"),
-              actions: [
-                TextButton(
-                    onPressed: (){
-                      Navigator.pop(context);
-                    },
-                    child: Text("Tamam")),
-              ],
-            );
-          },
-      );
+      CustomShowDialog(e.message.toString(), "Error", context);
     }
   }
   @override
@@ -106,22 +92,7 @@ class _SignupPageState extends State<SignupPage> {
                         onPressed: (){
                           if(_formKey.currentState!.validate()) {
                             if(passwordTextController.text != confirmPwTextController.text) {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context){
-                                  return AlertDialog(
-                                    title: Text("Error"),
-                                    content: Text("Password does not match"),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: (){
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text("Tamam")),
-                                    ],
-                                  );
-                                },
-                              );
+                              CustomShowDialog("Password does not match", "Error", context);
                             }else {
                               signUp();
                             }

@@ -5,6 +5,7 @@ import 'package:flutter_recipe_app/constant/colors.dart';
 import 'package:flutter_recipe_app/pages/ForgotPasswordPage.dart';
 import 'package:flutter_recipe_app/pages/MainPage.dart';
 import 'package:flutter_recipe_app/pages/SignupPage.dart';
+import 'package:flutter_recipe_app/shared/custom-widgets/CustomShowDialog.dart';
 import 'package:flutter_recipe_app/shared/custom-widgets/customTextField.dart';
 
 class LoginPage extends StatefulWidget {
@@ -16,7 +17,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _checked = false;
-  
   var emailTextController = TextEditingController();
   var passwordTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -38,22 +38,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MainPage()), (route) => false);
     }on FirebaseAuthException catch(e){
       Navigator.pop(context);
-      showDialog(
-        context: context,
-        builder: (BuildContext context){
-          return AlertDialog(
-            title: Text("Error"),
-            content: Text("${e.message}"),
-            actions: [
-              TextButton(
-                  onPressed: (){
-                    Navigator.pop(context);
-                  },
-                  child: Text("Tamam",style: TextStyle(fontSize: 15),)),
-            ],
-          );
-        },
-      );
+      CustomShowDialog(e.message.toString(), "Error", context);
     }
   }
   @override

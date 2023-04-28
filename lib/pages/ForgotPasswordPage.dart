@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/pages/LoginPage.dart';
+import 'package:flutter_recipe_app/shared/custom-widgets/CustomShowDialog.dart';
 import 'package:flutter_recipe_app/shared/custom-widgets/customTextField.dart';
 
 import '../constant/colors.dart';
@@ -26,22 +27,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
     }on FirebaseAuthException catch(e) {
       Navigator.pop(context);
-      showDialog(
-        context: context,
-        builder: (BuildContext context){
-          return AlertDialog(
-            title: Text("Error"),
-            content: Text("${e.message}"),
-            actions: [
-              TextButton(
-                  onPressed: (){
-                    Navigator.pop(context);
-                  },
-                  child: Text("Tamam",style: TextStyle(fontSize: 15),)),
-            ],
-          );
-        },
-      );
+      CustomShowDialog(e.message.toString(), "Error", context);
     }
   }
   @override
@@ -88,7 +74,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     opacity: 0.9,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-
                           backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),

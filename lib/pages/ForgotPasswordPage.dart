@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/pages/LoginPage.dart';
 
 import '../constant/colors.dart';
 
@@ -14,10 +15,32 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _formKey = GlobalKey<FormState>();
   var emailTextController = TextEditingController();
   Future<void> resetPassword() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(child: CircularProgressIndicator(),)
+    );
     try {
-     await FirebaseAuth.instance.sendPasswordResetEmail(email: emailTextController.text);
+     await FirebaseAuth.instance.sendPasswordResetEmail(email: emailTextController.text.trim());
+     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
     }on FirebaseAuthException catch(e) {
-      print(e);
+      Navigator.pop(context);
+      showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: Text("Error"),
+            content: Text("${e.message}"),
+            actions: [
+              TextButton(
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
+                  child: Text("Tamam",style: TextStyle(fontSize: 15),)),
+            ],
+          );
+        },
+      );
     }
   }
   @override

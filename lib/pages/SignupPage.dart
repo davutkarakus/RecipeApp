@@ -1,5 +1,4 @@
 
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/pages/LoginPage.dart';
@@ -19,7 +18,8 @@ class _SignupPageState extends State<SignupPage> {
   var passwordTextController = TextEditingController();
   var confirmPwTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
+  bool passwordVisible = false;
+  bool confirmPasswordVisible = false;
   Future<void> signUp() async {
     showDialog(
         context: context,
@@ -27,10 +27,28 @@ class _SignupPageState extends State<SignupPage> {
         builder: (context) => Center(child: CircularProgressIndicator(),)
     );
     try {
-      FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailTextController.text, password: passwordTextController.text);
-
+     await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailTextController.text.trim(), password: passwordTextController.text.trim());
+     Navigator.pop(context);
+     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+     FirebaseAuth.instance.signOut();
     }on FirebaseAuthException catch(e) {
-      print(e);
+      Navigator.pop(context);
+      showDialog(
+          context: context,
+          builder: (BuildContext context){
+            return AlertDialog(
+              title: Text("Error"),
+              content: Text("${e.message}"),
+              actions: [
+                TextButton(
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
+                    child: Text("Tamam")),
+              ],
+            );
+          },
+      );
     }
   }
   @override
@@ -156,7 +174,7 @@ class _SignupPageState extends State<SignupPage> {
                       return null;
                     },
                     controller: passwordTextController,
-                    obscureText: true,
+                    obscureText: !passwordVisible,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 15,
@@ -168,11 +186,13 @@ class _SignupPageState extends State<SignupPage> {
                         size: 18,
                       ),
                       suffixIcon: IconButton(
-                        icon: Icon(Icons.remove_red_eye),
+                        icon: passwordVisible ? Icon(Icons.visibility_off_outlined):Icon(Icons.visibility_outlined),
                         color: Colors.white,
                         iconSize: 18,
                         onPressed: (() {
-                          print("şifre göster gizle");
+                          setState(() {
+                            passwordVisible = !passwordVisible;
+                          });
                         }),
                       ),
                       border: UnderlineInputBorder(
@@ -198,12 +218,12 @@ class _SignupPageState extends State<SignupPage> {
                   child: TextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter confirm your password';
+                        return 'Please confirm your password';
                       }
                       return null;
                     },
                     controller: confirmPwTextController,
-                    obscureText: true,
+                    obscureText: !confirmPasswordVisible,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 15,
@@ -215,11 +235,13 @@ class _SignupPageState extends State<SignupPage> {
                         size: 18,
                       ),
                       suffixIcon: IconButton(
-                        icon: Icon(Icons.remove_red_eye),
+                        icon: confirmPasswordVisible ? Icon(Icons.visibility_off_outlined):Icon(Icons.visibility_outlined),
                         color: Colors.white,
                         iconSize: 18,
                         onPressed: (() {
-                          print("şifre göster gizle");
+                          setState(() {
+                            confirmPasswordVisible = !confirmPasswordVisible;
+                          });
                         }),
                       ),
                       border: UnderlineInputBorder(
@@ -254,7 +276,26 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         onPressed: (){
                           if(_formKey.currentState!.validate()) {
-                            signUp();
+                            if(passwordTextController.text != confirmPwTextController.text) {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context){
+                                  return AlertDialog(
+                                    title: Text("Error"),
+                                    content: Text("Password does not match"),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: (){
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text("Tamam")),
+                                    ],
+                                  );
+                                },
+                              );
+                            }else {
+                              signUp();
+                            }
                           }
                         },
                         child: Text("SIGN UP",style: TextStyle(color: Colors.black,fontSize: 16),)

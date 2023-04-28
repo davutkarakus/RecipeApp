@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   var emailTextController = TextEditingController();
   var passwordTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
+  bool passwordVisible = false;
   @override
   void dispose() {
     emailTextController.dispose();
@@ -36,7 +36,23 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MainPage()), (route) => false);
       print(FirebaseAuth.instance.currentUser?.email);
     }on FirebaseAuthException catch(e){
-      print(e);
+      Navigator.pop(context);
+      showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: Text("Error"),
+            content: Text("${e.message}"),
+            actions: [
+              TextButton(
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
+                  child: Text("Tamam",style: TextStyle(fontSize: 15),)),
+            ],
+          );
+        },
+      );
     }
   }
   @override
@@ -107,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                   opacity: 0.9,
                   child: TextFormField(
                     controller: passwordTextController,
-                    obscureText: true,
+                    obscureText: !passwordVisible,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your password';
@@ -120,16 +136,18 @@ class _LoginPageState extends State<LoginPage> {
                         fontWeight: FontWeight.w400),
                     decoration: InputDecoration(
                       prefixIcon: Icon(
-                        Icons.lock_outline,
+                        Icons.lock_outlined,
                         color: Colors.white,
                         size: 18,
                       ),
                       suffixIcon: IconButton(
-                        icon: Icon(Icons.remove_red_eye),
+                        icon: passwordVisible ? Icon(Icons.visibility_off_outlined) :Icon(Icons.visibility_outlined),
                         color: Colors.white,
                         iconSize: 18,
                         onPressed: (() {
-                          print("şifre göster gizle");
+                          setState(() {
+                            passwordVisible = !passwordVisible;
+                          });
                         }),
                       ),
                       border: UnderlineInputBorder(

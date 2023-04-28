@@ -1,12 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/constant/colors.dart';
 import 'package:flutter_recipe_app/pages/ForgotPasswordPage.dart';
 import 'package:flutter_recipe_app/pages/MainPage.dart';
 import 'package:flutter_recipe_app/pages/SignupPage.dart';
 import 'package:flutter_recipe_app/shared/custom-widgets/CustomShowDialog.dart';
 import 'package:flutter_recipe_app/shared/custom-widgets/customTextField.dart';
+
+import '../shared/constant/colors.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -63,8 +64,8 @@ class _LoginPageState extends State<LoginPage> {
                 child: Image.asset("images/loginIcon.png",width: 35,height: 35,),
               ),
               Text("Login to your account",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.white),),
-              CustomTextField(labelText: "Email", validateText: "Please enter your e-mail address", tfController: emailTextController,prefixIcon: Icons.email_outlined,hasSuffixIcon: false,passwordVisible: true,),
-              CustomTextField(labelText: "Password", validateText: "Please enter your password", tfController: passwordTextController,prefixIcon: Icons.lock_outlined,hasSuffixIcon: true,passwordVisible: passwordVisible,),
+              CustomTextField(labelText: "Email", validateText: "Please enter your e-mail address", tfController: emailTextController,prefixIcon: Icons.email_outlined,hasSuffixIcon: false,passwordVisible: true,keyboardType: TextInputType.emailAddress,),
+              CustomTextField(labelText: "Password", validateText: "Please enter your password", tfController: passwordTextController,prefixIcon: Icons.lock_outlined,hasSuffixIcon: true,passwordVisible: passwordVisible,keyboardType: TextInputType.visiblePassword,),
               Padding(
                 padding: const EdgeInsets.only(left: 50,right: 50),
                 child: Row(

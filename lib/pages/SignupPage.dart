@@ -5,7 +5,8 @@ import 'package:flutter_recipe_app/pages/LoginPage.dart';
 import 'package:flutter_recipe_app/shared/custom-widgets/CustomShowDialog.dart';
 import 'package:flutter_recipe_app/shared/custom-widgets/customTextField.dart';
 
-import '../constant/colors.dart';
+import '../shared/constant/colors.dart';
+
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
@@ -71,10 +72,10 @@ class _SignupPageState extends State<SignupPage> {
                 child: Image.asset("images/loginIcon.png",width: 35,height: 35,),
               ),
               Text("Create New Account",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.white),),
-              CustomTextField(labelText: "Username", validateText: "Please enter your username", tfController: usernameTextController,prefixIcon: Icons.person,hasSuffixIcon: false,passwordVisible: true,),
-              CustomTextField(labelText: "Email", validateText: "Please enter your e-mail address", tfController: emailTextController,prefixIcon: Icons.email_outlined,hasSuffixIcon: false,passwordVisible: true,),
-              CustomTextField(labelText: "Password", validateText: "Please enter your password", tfController: passwordTextController, prefixIcon: Icons.lock_outlined,passwordVisible: passwordVisible,hasSuffixIcon: true,),
-              CustomTextField(labelText: "Confirm Password", validateText: "Please confirm your password", tfController: confirmPwTextController, prefixIcon: Icons.lock_outlined, passwordVisible: confirmPasswordVisible, hasSuffixIcon: true),
+              CustomTextField(labelText: "Username", validateText: "Please enter your username", tfController: usernameTextController,prefixIcon: Icons.person,hasSuffixIcon: false,passwordVisible: true,keyboardType: TextInputType.name,),
+              CustomTextField(labelText: "Email", validateText: "Please enter your e-mail address", tfController: emailTextController,prefixIcon: Icons.email_outlined,hasSuffixIcon: false,passwordVisible: true,keyboardType: TextInputType.emailAddress,),
+              CustomTextField(labelText: "Password", validateText: "Please enter your password", tfController: passwordTextController, prefixIcon: Icons.lock_outlined,passwordVisible: passwordVisible,hasSuffixIcon: true,keyboardType: TextInputType.visiblePassword,),
+              CustomTextField(labelText: "Confirm Password", validateText: "Please confirm your password", tfController: confirmPwTextController, prefixIcon: Icons.lock_outlined, passwordVisible: confirmPasswordVisible, hasSuffixIcon: true,keyboardType: TextInputType.visiblePassword,),
               Padding(
                 padding: const EdgeInsets.only(left: 50, right: 50,top: 50),
                 child: SizedBox(

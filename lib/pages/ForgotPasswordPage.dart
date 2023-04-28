@@ -4,7 +4,8 @@ import 'package:flutter_recipe_app/pages/LoginPage.dart';
 import 'package:flutter_recipe_app/shared/custom-widgets/CustomShowDialog.dart';
 import 'package:flutter_recipe_app/shared/custom-widgets/customTextField.dart';
 
-import '../constant/colors.dart';
+import '../shared/constant/colors.dart';
+
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
@@ -63,7 +64,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               ),
               Form(
                 key: _formKey,
-                child: CustomTextField(labelText: "Email", validateText: "Please enter your e-mail address", tfController: emailTextController,prefixIcon: Icons.email_outlined,hasSuffixIcon: false,passwordVisible: true,),
+                child: CustomTextField(labelText: "Email", validateText: "Please enter your e-mail address", tfController: emailTextController,prefixIcon: Icons.email_outlined,hasSuffixIcon: false,passwordVisible: true,keyboardType: TextInputType.emailAddress,),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 50, right: 50,top: 33),

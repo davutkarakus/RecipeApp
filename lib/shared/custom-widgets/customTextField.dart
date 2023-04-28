@@ -3,9 +3,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../constant/colors.dart';
+import '../constant/colors.dart';
 
 class CustomTextField extends StatefulWidget {
+  TextInputType? keyboardType;
   bool hasSuffixIcon=false;
   bool? passwordVisible=true;
   IconButton? suffixIconButton;
@@ -16,7 +17,7 @@ class CustomTextField extends StatefulWidget {
   String? labelText;
   String? validateText;
 
-  CustomTextField({required this.labelText, required this.validateText,required this.tfController,required this.prefixIcon,this.iconColor,this.iconSize,this.suffixIconButton,required this.passwordVisible,required this.hasSuffixIcon});
+  CustomTextField({required this.labelText, required this.validateText,required this.tfController,required this.prefixIcon,this.iconColor,this.iconSize,this.suffixIconButton,required this.passwordVisible,required this.hasSuffixIcon,required this.keyboardType});
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -31,6 +32,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         opacity: 0.9,
         child: Container(
           child: TextFormField(
+            keyboardType: widget.keyboardType,
             controller: widget.tfController,
             obscureText: !widget.passwordVisible!,
             validator: (value) {

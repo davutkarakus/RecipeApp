@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/pages/LoginPage.dart';
+import 'package:flutter_recipe_app/shared/custom-widgets/customTextField.dart';
 
 import '../constant/colors.dart';
 
@@ -76,46 +77,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               ),
               Form(
                 key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 50, right: 50,top: 20),
-                  child: Opacity(
-                    opacity: 0.9,
-                    child: TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: emailTextController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your e-mail address';
-                        }
-                        return null;
-                      },
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400),
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.mail_outline,
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                        border: UnderlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(15)),
-                        filled: true,
-                        fillColor: textFieldColor,
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(15)),
-                        hintText: "example@gmail.com",
-                        labelText: "Email",
-                        contentPadding:
-                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                        labelStyle: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
+                child: CustomTextField(labelText: "Email", validateText: "Please enter your e-mail address", tfController: emailTextController,prefixIcon: Icons.email_outlined,hasSuffixIcon: false,passwordVisible: true,),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 50, right: 50,top: 33),

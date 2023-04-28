@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/pages/LoginPage.dart';
+import 'package:flutter_recipe_app/shared/custom-widgets/customTextField.dart';
 
 import '../constant/colors.dart';
 
@@ -27,10 +28,11 @@ class _SignupPageState extends State<SignupPage> {
         builder: (context) => Center(child: CircularProgressIndicator(),)
     );
     try {
-     await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailTextController.text.trim(), password: passwordTextController.text.trim());
+     final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: emailTextController.text.trim(), password: passwordTextController.text.trim());
+     userCredential.user?.updateDisplayName(usernameTextController.text);
      Navigator.pop(context);
      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
-     FirebaseAuth.instance.signOut();
+     await  FirebaseAuth.instance.signOut();
     }on FirebaseAuthException catch(e) {
       Navigator.pop(context);
       showDialog(
@@ -83,183 +85,10 @@ class _SignupPageState extends State<SignupPage> {
                 child: Image.asset("images/loginIcon.png",width: 35,height: 35,),
               ),
               Text("Create New Account",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500,color: Colors.white),),
-              Padding(
-                padding: const EdgeInsets.only(left: 50, right: 50,top: 17),
-                child: Opacity(
-                  opacity: 0.9,
-                  child: Container(
-                    child: TextFormField(
-                      controller: usernameTextController,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your username';
-                        }
-                        return null;
-                      },
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400),
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.person,
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                        border: UnderlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(15)),
-                        filled: true,
-                        fillColor: textFieldColor,
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(15)),
-                        labelText: "Username",
-                        contentPadding:
-                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                        labelStyle: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 50, right: 50,top: 25),
-                child: Opacity(
-                  opacity: 0.9,
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your e-mail address';
-                      }
-                      return null;
-                    },
-                    controller: emailTextController,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400),
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.mail_outline,
-                        color: Colors.white,
-                        size: 18,
-                      ),
-                      border: UnderlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(15)),
-                      filled: true,
-                      fillColor: textFieldColor,
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(15)),
-                      labelText: "Email",
-                      contentPadding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                      labelStyle: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 50, right: 50,top: 25),
-                child: Opacity(
-                  opacity: 0.9,
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
-                      }
-                      return null;
-                    },
-                    controller: passwordTextController,
-                    obscureText: !passwordVisible,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400),
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.lock_outlined,
-                        color: Colors.white,
-                        size: 18,
-                      ),
-                      suffixIcon: IconButton(
-                        icon: passwordVisible ? Icon(Icons.visibility_off_outlined):Icon(Icons.visibility_outlined),
-                        color: Colors.white,
-                        iconSize: 18,
-                        onPressed: (() {
-                          setState(() {
-                            passwordVisible = !passwordVisible;
-                          });
-                        }),
-                      ),
-                      border: UnderlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(15)),
-                      filled: true,
-                      fillColor: textFieldColor,
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(15)),
-                      labelText: "Password",
-                      contentPadding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                      labelStyle: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 50, right: 50,top: 25),
-                child: Opacity(
-                  opacity: 0.9,
-                  child: TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please confirm your password';
-                      }
-                      return null;
-                    },
-                    controller: confirmPwTextController,
-                    obscureText: !confirmPasswordVisible,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400),
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(
-                        Icons.lock_outlined,
-                        color: Colors.white,
-                        size: 18,
-                      ),
-                      suffixIcon: IconButton(
-                        icon: confirmPasswordVisible ? Icon(Icons.visibility_off_outlined):Icon(Icons.visibility_outlined),
-                        color: Colors.white,
-                        iconSize: 18,
-                        onPressed: (() {
-                          setState(() {
-                            confirmPasswordVisible = !confirmPasswordVisible;
-                          });
-                        }),
-                      ),
-                      border: UnderlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(15)),
-                      filled: true,
-                      fillColor: textFieldColor,
-                      focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(15)),
-                      labelText: "Confirm Password",
-                      contentPadding:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-                      labelStyle: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
+              CustomTextField(labelText: "Username", validateText: "Please enter your username", tfController: usernameTextController,prefixIcon: Icons.person,hasSuffixIcon: false,passwordVisible: true,),
+              CustomTextField(labelText: "Email", validateText: "Please enter your e-mail address", tfController: emailTextController,prefixIcon: Icons.email_outlined,hasSuffixIcon: false,passwordVisible: true,),
+              CustomTextField(labelText: "Password", validateText: "Please enter your password", tfController: passwordTextController, prefixIcon: Icons.lock_outlined,passwordVisible: passwordVisible,hasSuffixIcon: true,),
+              CustomTextField(labelText: "Confirm Password", validateText: "Please confirm your password", tfController: confirmPwTextController, prefixIcon: Icons.lock_outlined, passwordVisible: confirmPasswordVisible, hasSuffixIcon: true),
               Padding(
                 padding: const EdgeInsets.only(left: 50, right: 50,top: 50),
                 child: SizedBox(

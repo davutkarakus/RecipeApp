@@ -20,18 +20,19 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context){
     return Scaffold(
       body: pageList[selectedIndex],
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(right: 40,left: 40,bottom: 15),
-        child: Container(
-          width: double.infinity,
-          height: 55,
-          decoration: BoxDecoration(
-            color: textFieldColor.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(30)
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40,vertical: 10),
-            child: SafeArea(
+      bottomNavigationBar: SafeArea(
+        bottom: false,
+        child: Padding(
+          padding: const EdgeInsets.only(right: 40,left: 40,bottom: 25),
+          child: Container(
+            width: double.infinity,
+            height: 55,
+            decoration: BoxDecoration(
+              color: textFieldColor.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(30)
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40,vertical: 10),
               child: GNav(
                   backgroundColor: Colors.transparent,
                   rippleColor: Colors.grey.shade800 ,
@@ -65,7 +66,7 @@ class _MainPageState extends State<MainPage> {
                       selectedIndex = index;
                     });
                 },
-              )
+              ),
             ),
           ),
         ),

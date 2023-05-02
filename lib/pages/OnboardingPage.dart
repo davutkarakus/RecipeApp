@@ -14,6 +14,13 @@ class OnboardingPage extends StatefulWidget {
 class _OnboardingPageState extends State<OnboardingPage> {
   late PageController _pageController;
   int _pageIndex = 0;
+  Future<void> signInOrHome() async {
+    if(await FirebaseAuth.instance.currentUser == null) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+    }else {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage()));
+    }
+  }
   @override
   void initState() {
     _pageController = PageController(initialPage: 0);
@@ -63,11 +70,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       child: ElevatedButton(
                         onPressed: () {
                           if(_pageIndex == 2) {
-                            if(FirebaseAuth.instance.currentUser == null) {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
-                            }else {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage()));
-                            }
+                            signInOrHome();
                           }else {
                             _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
                           }

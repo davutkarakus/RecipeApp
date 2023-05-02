@@ -1,9 +1,8 @@
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/pages/LoginPage.dart';
-
-import '../shared/constant/colors.dart';
+import 'package:flutter_recipe_app/pages/FavoriPage.dart';
+import 'package:flutter_recipe_app/pages/HomePage.dart';
+import 'package:flutter_recipe_app/pages/ProfilePage.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -13,45 +12,37 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  var searchTfController = TextEditingController();
-  var username = FirebaseAuth.instance.currentUser!.displayName;
-  Future<void> signOut() async{
-    await FirebaseAuth.instance.signOut();
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
-  }
+  var pageList = [HomePage(),FavoriPage(),ProfilePage()];
+  int selectedIndex = 0;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
-      body: Column(
-        children: [
-          Text("Hello,$username"),
-          Text("Make your own food,\n stay at home"),
-          Container(
-            margin: EdgeInsets.fromLTRB(16, 16, 16, 16),
-            child: TextField(
-              controller: searchTfController,
-              decoration: InputDecoration(
-                prefixIcon: const Icon(Icons.search),
-                hintText: "Search any recipe",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide:  BorderSide(color: Colors.red,width: 12),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: textFieldColor),
-                  borderRadius: BorderRadius.circular(20),
-                )
-              ),
-            ),
+      body: pageList[selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home"
           ),
-          ElevatedButton(
-              onPressed: (){
-                signOut();
-              },
-              child: Text("Sign out")
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_border),
+              label: "Favorites"
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person_2_outlined),
+              label: "Profile"
           ),
         ],
-      )
+        backgroundColor: Colors.orangeAccent,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.white,
+        currentIndex: selectedIndex,
+        onTap: (index) {
+          setState(() {
+            selectedIndex = index;
+          });
+        },
+      ),
     );
   }
 }

@@ -123,7 +123,10 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  Text("Popular Recipes"),
+                  Padding(
+                    padding: const EdgeInsets.only(top:10.0),
+                    child: Text("Popular Recipes",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600),),
+                  ),
                   ElevatedButton(
                       onPressed: (){
                         signOut();

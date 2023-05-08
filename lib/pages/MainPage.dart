@@ -20,7 +20,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context){
     return Scaffold(
       body: pageList[selectedIndex],
-      bottomNavigationBar: SafeArea(
+     bottomNavigationBar: SafeArea(
         bottom: false,
         child: Padding(
           padding: const EdgeInsets.only(right: 40,left: 40,bottom: 25),
@@ -54,7 +54,7 @@ class _MainPageState extends State<MainPage> {
                     ),
                     GButton(
                       icon: Icons.favorite_outlined,
-                      text: 'Likes',
+                      text: 'Favorites',
                     ),
                     GButton(
                       icon: Icons.person,

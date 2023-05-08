@@ -1,6 +1,11 @@
+
+
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_recipe_app/entity/MainPage/RecipeResponse.dart';
+import 'package:flutter_recipe_app/entity/MainPage/Results.dart';
+import 'dart:convert';
 import '../entity/MainPage/Categories.dart';
 import 'LoginPage.dart';
 
@@ -12,6 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var ratioItem = 1 / 1.3;
   var searchTfController = TextEditingController();
   var username = FirebaseAuth.instance.currentUser!.displayName;
   Future<void> signOut() async{
@@ -35,6 +41,18 @@ class _HomePageState extends State<HomePage> {
     categoryList.add(c6);
     categoryList.add(c7);
     return categoryList;
+  }
+  List<Results> parseResultsResponse(String response) {
+    return RecipeResponse.fromJson(json.decode(response)).results;
+  }
+  Future<List<Results>> getRecipes() async {
+    var url = "https://api.spoonacular.com/recipes/complexSearch?apiKey=e466d8bfcfea415a9a663bf33fa8b6f4&number=15";
+    var cevap = await Dio().get(url);
+    return parseResultsResponse(cevap.toString());
+  }
+  @override
+  void initState() {
+    super.initState();
   }
   @override
   Widget build(BuildContext context) {
@@ -87,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  Text("Categories",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),),
+                  Text("Categories",style: TextStyle(fontSize: 19,fontWeight: FontWeight.w600),),
                   Padding(
                     padding: const EdgeInsets.only(top:10.0),
                     child: SizedBox(
@@ -109,7 +127,7 @@ class _HomePageState extends State<HomePage> {
                                           ClipRRect(borderRadius: BorderRadius.circular(10),child: SizedBox(height: 120 ,width: 120,child: Image.network(category.category_image,fit: BoxFit.cover))),
                                           Padding(
                                             padding: const EdgeInsets.only(top:5.0),
-                                            child: Text(category.category_name,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 15),),
+                                            child: Text(category.category_name,style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
                                           ),
                                         ],
                                       ),
@@ -127,11 +145,50 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.only(top:10.0),
                     child: Text("Popular Recipes",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w600),),
                   ),
-                  ElevatedButton(
-                      onPressed: (){
-                        signOut();
-                      },
-                      child: Text("Sign out")
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top:10,bottom: 2),
+                      child: FutureBuilder<List<Results>>(
+                          future: getRecipes(),
+                          builder: (context,snapshot){
+                            if(snapshot.hasData) {
+                              var recipeList = snapshot.data;
+                              return GridView.builder(
+                                shrinkWrap: true,
+                                  itemCount: recipeList!.length,
+                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount:  2,
+                                    crossAxisSpacing: 5,
+                                    childAspectRatio: 1 / 1.05
+                                ),
+                                    itemBuilder: (context,indeks) {
+                                      var recipe = recipeList[indeks];
+                                      return GestureDetector(
+                                        onTap: (){
+                                       //   Navigator.push(context, MaterialPageRoute(builder: (context) => DetaySayfa(film: film,)));
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(right:15),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              ClipRRect(borderRadius: BorderRadius.circular(10),child: SizedBox(child: Image.network(recipe.image,fit: BoxFit.cover))),
+                                              SizedBox(height: 5,),
+                                              Text(recipe.title,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 14),textAlign: TextAlign.center,),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                              );
+                            }else {
+                              print("Snapshot yok");
+                              return Center();
+                            }
+                          }
+                      ),
+                    ),
                   ),
                 ],
               ),

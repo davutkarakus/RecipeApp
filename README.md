@@ -1,13 +1,12 @@
 # flutter_recipe_app
 - Firebase Auth
-- FuturuBuilder
+- Future Builder
 - ListView
 - Bottom Navigation Bar
-- Navigation Controller
 - Dio
 - Onboarding
 - State Management
-
+- Bloc
 
 <p float = "left">
 <img src="https://github.com/davutkarakus/RecipeApp/assets/111883993/c2aefe65-226a-472c-9234-0f414f2c73f1" width="250"/>

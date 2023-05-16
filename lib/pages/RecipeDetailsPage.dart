@@ -46,7 +46,7 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
                   width: screenSize.width,
                   decoration: BoxDecoration(
                     color: Colors.blueGrey.shade400,
-                    borderRadius: BorderRadius.only(topRight: Radius.circular(35),topLeft: Radius.circular(35)),
+                    borderRadius: BorderRadius.only(topRight: Radius.circular(32),topLeft: Radius.circular(32)),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(24.0),

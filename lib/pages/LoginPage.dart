@@ -142,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                     Text("Don't have an account ?",style: TextStyle(color: Colors.white,fontSize: 14),),
                     TextButton(
                         onPressed: (){
-                          Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => SignupPage()));
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => SignupPage()));
                         },
                         child: Text("Sign Up",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,fontSize: 17),)
                     ),

@@ -190,6 +190,12 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
+                ElevatedButton(
+                    onPressed: (){
+                      signOut();
+                    }
+                    , child: Text("Sign Out")
+                ),
               ],
             ),
           ),

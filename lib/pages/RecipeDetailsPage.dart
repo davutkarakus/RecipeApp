@@ -1,8 +1,12 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/entity/DetailsPage/RecipeDetailResponse.dart';
 import 'package:flutter_recipe_app/shared/constant/colors.dart';
 
 class FoodDetailsPage extends StatefulWidget {
-  var recipe_id;
+  int recipe_id;
   String recipe_image_url;
 
   FoodDetailsPage({required this.recipe_id,required this.recipe_image_url});
@@ -12,8 +16,15 @@ class FoodDetailsPage extends StatefulWidget {
 }
 
 class _FoodDetailsPageState extends State<FoodDetailsPage> {
-  Future<void> getInfoRecipe() async {
-
+  RecipeDetailResponse parseInfoResponse(String response) {
+    return RecipeDetailResponse.fromJson(json.decode(response));
+  }
+  Future<RecipeDetailResponse> getInfoRecipe() async {
+      var url = "https://api.spoonacular.com/recipes/${widget.recipe_id}/information?apiKey=e466d8bfcfea415a9a663bf33fa8b6f4";
+      print(url);
+      var cevap = await Dio().get(url);
+      print(cevap);
+      return parseInfoResponse(cevap.toString());
   }
   @override
   void initState() {
@@ -45,11 +56,16 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
                   height: screenSize.height / 1.5,
                   width: screenSize.width,
                   decoration: BoxDecoration(
-                    color: Colors.blueGrey.shade400,
+                    image: DecorationImage(
+                      image: AssetImage("images/backGround.png"),
+                    fit: BoxFit.cover,
+                    opacity: 0.7
+                ),
+                    color: Colors.white,
                     borderRadius: BorderRadius.only(topRight: Radius.circular(32),topLeft: Radius.circular(32)),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(24.0),
+                    padding: const EdgeInsets.all(20.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -63,11 +79,19 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
                             borderRadius: BorderRadius.circular(3),
                           ),
                         ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text("Yemek Adı"),
 
+                          ],
+                        ),
                       ],
                     ),
                   ),
-                ))
+
+                ),
+            ),
           ],
         ),
       ),

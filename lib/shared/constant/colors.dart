@@ -7,7 +7,7 @@ const Color navBarItem = Color(0xFF205E61);
 const LinearGradient gradient = LinearGradient(
   colors: [
     Colors.white,
-    Color(0xFFCBAAFF),
+    Color(0xFF818081),
   ],
   begin: Alignment.topCenter,
   end: Alignment.bottomCenter,

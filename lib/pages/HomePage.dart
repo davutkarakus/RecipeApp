@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
     var c1 = Categories(category_id: 1, category_name: "Vegetables", category_image: "https://spoonacular.com/recipeImages/1096026-312x231.jpg");
     var c2 = Categories(category_id: 2, category_name: "Soups", category_image: "https://spoonacular.com/recipeImages/1096263-312x231.jpg");
     var c3 = Categories(category_id: 3, category_name: "Desserts", category_image: "https://spoonacular.com/recipeImages/1025438-312x231.jpg");
-    var c4 = Categories(category_id: 4, category_name: "Salad", category_image: "https://spoonacular.com/recipeImages/1098387-312x231.jpg");
+    var c4 = Categories(category_id: 4, category_name: "Salads", category_image: "https://spoonacular.com/recipeImages/1098387-312x231.jpg");
     var c5 = Categories(category_id: 5, category_name: "Asian", category_image: "https://spoonacular.com/recipeImages/716217-312x231.jpg");
     var c6 = Categories(category_id: 6, category_name: "American", category_image: "https://spoonacular.com/recipeImages/646512-312x231.jpg");
     var c7 = Categories(category_id: 7, category_name: "Italian", category_image: "https://spoonacular.com/recipeImages/715495-312x231.jpg");
@@ -165,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                                     var recipe = recipeList[indeks];
                                     return GestureDetector(
                                       onTap: (){
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => FoodDetailsPage(recipe_id: recipe,recipe_image_url: recipe.image,)));
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) => FoodDetailsPage(recipe_id: recipe.id,recipe_image_url: recipe.image,)));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.only(right:15),

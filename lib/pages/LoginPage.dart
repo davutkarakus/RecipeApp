@@ -103,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     TextButton(
                         onPressed: (){
-                          Navigator.push(context,MaterialPageRoute(builder: (context) => ForgotPasswordPage(),fullscreenDialog: true));
+                          Navigator.push(context,CupertinoPageRoute(builder: (context) => ForgotPasswordPage(),fullscreenDialog: false));
                         },
                         child: Text("Forgot Password?",style: TextStyle(color: Colors.white,fontSize: 16,fontWeight: FontWeight.bold),),
                     )

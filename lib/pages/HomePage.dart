@@ -2,6 +2,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/entity/MainPage/RecipeResponse.dart';
 import 'package:flutter_recipe_app/entity/MainPage/Results.dart';
@@ -168,7 +169,7 @@ class _HomePageState extends State<HomePage> {
                                     var recipe = recipeList[indeks];
                                     return GestureDetector(
                                       onTap: (){
-                                        Navigator.push(context, MaterialPageRoute(builder: (context) => FoodDetailsPage(recipe_id: recipe.id,recipe_image_url: recipe.image,)));
+                                        Navigator.push(context, CupertinoPageRoute(builder: (context) => FoodDetailsPage(recipe_id: recipe.id,recipe_image_url: recipe.image,),fullscreenDialog: false));
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.only(right:15),

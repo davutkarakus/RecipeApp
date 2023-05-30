@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/entity/DetailsPage/RecipeDetailResponse.dart';
@@ -28,7 +27,6 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
   }
   @override
   void initState() {
-    getInfoRecipe();
     super.initState();
   }
   @override
@@ -79,12 +77,46 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
                             borderRadius: BorderRadius.circular(3),
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text("Yemek Adı"),
+                        FutureBuilder<RecipeDetailResponse>(
+                            future: getInfoRecipe(),
+                            builder: (context,snapshot){
+                              if(snapshot.hasData){
+                                var infos = snapshot.data;
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Expanded(child: Text(infos!.title,style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),softWrap: true,textAlign: TextAlign.center,)),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left:10.0),
+                                          child: Container(
+                                            width: 70,
+                                            height: 30,
+                                            decoration: BoxDecoration(
+                                              color: Colors.lightGreen,
+                                              borderRadius: BorderRadius.circular(15)
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                Icon(Icons.favorite_outlined,color: Colors.pinkAccent,size: 18,),
+                                                SizedBox(width: 5,),
+                                                Text("${infos.aggregateLikes}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500),textAlign: TextAlign.justify,),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
 
-                          ],
+                                  ],
+                                );
+                              }else {
+                                return Center();
+                              }
+                            },
                         ),
                       ],
                     ),

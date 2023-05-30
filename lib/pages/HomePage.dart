@@ -103,6 +103,9 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(20),
                         )
                     ),
+                    onChanged: (aramaSonucu){
+                      print(aramaSonucu);
+                    },
                   ),
                 ),
                 Text("Categories",style: TextStyle(fontSize: 19,fontWeight: FontWeight.w600),),
@@ -184,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                             );
                           }else {
                             print("Snapshot yok");
-                            return Center();
+                            return Center(child: CircularProgressIndicator());
                           }
                         }
                     ),

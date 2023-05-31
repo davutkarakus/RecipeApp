@@ -17,13 +17,14 @@ class FoodDetailsPage extends StatefulWidget {
 
 class _FoodDetailsPageState extends State<FoodDetailsPage> {
   RecipeDetailResponse parseInfoResponse(String response) {
-    return RecipeDetailResponse.fromJson(json.decode(response));
+    RegExp exp = RegExp(r"<[^>]*>",multiLine: true,caseSensitive: true);
+    String parsedstring1 = response.replaceAll(exp, '');
+    return RecipeDetailResponse.fromJson(json.decode(parsedstring1));
   }
   Future<RecipeDetailResponse> getInfoRecipe() async {
-      var url = "https://api.spoonacular.com/recipes/${widget.recipe_id}/information?apiKey=097ea301bfab4353a8a427f3027fba18";
+      var url = "https://api.spoonacular.com/recipes/${widget.recipe_id}/information?apiKey=97205ed88a404d8d8ef1e63c83d6cd47";
       print(url);
       var cevap = await Dio().get(url);
-      print(cevap);
       return parseInfoResponse(cevap.toString());
   }
   @override
@@ -91,7 +92,7 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          Expanded(child: Text(infos!.title,style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),softWrap: true,textAlign: TextAlign.center,)),
+                                          Expanded(child: Text(infos!.title,style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),softWrap: true,textAlign: TextAlign.start,)),
                                           Padding(
                                             padding: const EdgeInsets.only(left:10.0),
                                             child: Container(
@@ -104,7 +105,7 @@ class _FoodDetailsPageState extends State<FoodDetailsPage> {
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 children: [
-                                                  Icon(Icons.favorite_outlined,color: Colors.pinkAccent,size: 18,),
+                                                  Icon(Icons.favorite_outlined,color: Colors.white,size: 18,),
                                                   SizedBox(width: 5,),
                                                   Text("${infos.aggregateLikes}",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500,color: Colors.white),textAlign: TextAlign.justify,),
                                                 ],

@@ -9,7 +9,6 @@ import 'package:flutter_recipe_app/entity/MainPage/Results.dart';
 import 'package:flutter_recipe_app/pages/RecipeDetailsPage.dart';
 import 'dart:convert';
 import '../entity/MainPage/Categories.dart';
-import 'LoginPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,10 +20,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var searchTfController = TextEditingController();
   var username = FirebaseAuth.instance.currentUser!.displayName;
-  Future<void> signOut() async{
-    await FirebaseAuth.instance.signOut();
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
-  }
+
   Future<List<Categories>> getCategories() async {
     var categoryList = <Categories>[];
     var c1 = Categories(category_id: 1, category_name: "Vegetables", category_image: "https://spoonacular.com/recipeImages/1096026-312x231.jpg");
@@ -47,7 +43,7 @@ class _HomePageState extends State<HomePage> {
     return RecipeResponse.fromJson(json.decode(response)).results;
   }
   Future<List<Results>> getRecipes() async {
-    var url = "https://api.spoonacular.com/recipes/complexSearch?apiKey=097ea301bfab4353a8a427f3027fba18&number=30";
+    var url = "https://api.spoonacular.com/recipes/complexSearch?apiKey=97205ed88a404d8d8ef1e63c83d6cd47&number=30";
     var cevap = await Dio().get(url);
     return parseResultsResponse(cevap.toString());
   }
@@ -64,7 +60,7 @@ class _HomePageState extends State<HomePage> {
           image: DecorationImage(
               image: AssetImage("images/backGround.png"),
               fit: BoxFit.cover,
-              opacity: 0.6
+              opacity: 1
           ),
         ),
         child: Padding(
@@ -179,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                                           children: [
                                             ClipRRect(borderRadius: BorderRadius.circular(15),child: Image.network(recipe.image,fit: BoxFit.cover)),
                                             SizedBox(height: 5,),
-                                            Text(recipe.title,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 14),textAlign: TextAlign.center,),
+                                            Text(recipe.title,style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15),maxLines: 2,textAlign: TextAlign.center,overflow: TextOverflow.ellipsis,),
                                           ],
                                         ),
                                       ),
@@ -193,12 +189,6 @@ class _HomePageState extends State<HomePage> {
                         }
                     ),
                   ),
-                ),
-               ElevatedButton(
-                    onPressed: (){
-                      signOut();
-                    }
-                    , child: Text("Sign Out")
                 ),
               ],
             ),

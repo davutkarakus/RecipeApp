@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
     return RecipeResponse.fromJson(json.decode(response)).results;
   }
   Future<List<Results>> getRecipes() async {
-    var url = "https://api.spoonacular.com/recipes/complexSearch?apiKey=e466d8bfcfea415a9a663bf33fa8b6f4&number=15";
+    var url = "https://api.spoonacular.com/recipes/complexSearch?apiKey=097ea301bfab4353a8a427f3027fba18&number=30";
     var cevap = await Dio().get(url);
     return parseResultsResponse(cevap.toString());
   }

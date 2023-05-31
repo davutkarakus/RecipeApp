@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'LoginPage.dart';
 
@@ -12,12 +16,25 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  File? image;
   Future<void> signOut() async{
     try {
       await FirebaseAuth.instance.signOut();
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
     }catch(e) {
       print(e);
+    }
+  }
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      final imageTemporary = File(image.path);
+      setState(() {
+        this.image = imageTemporary;
+      });
+    }on PlatformException catch(e) {
+      print("Failed to pick image : $e");
     }
   }
   var kullanici = FirebaseAuth.instance.currentUser;
@@ -43,7 +60,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Stack(children: [
-                    SizedBox(width: 150,height: 150,child: ClipRRect(borderRadius: BorderRadius.circular(75),child: Image(image: AssetImage("images/profile.png")))),
+                    SizedBox(
+                        width: 150,
+                        height: 150,
+                        child: ClipRRect(borderRadius: BorderRadius.circular(75),
+                            child: GestureDetector(
+                                onTap: (){
+                                  pickImage();
+                                },child: image != null ? Image.file(image!) : Image(image: AssetImage("images/profile.png"))))),
                     Positioned(
                       bottom: 0,
                       right: 0,

@@ -94,7 +94,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: 45,
                     child: ElevatedButton(
                         onPressed: (){
-
                     },
                         child: Text("Edit Profile",style: TextStyle(color: Colors.black,fontSize: 16),),
                       style: ElevatedButton.styleFrom(backgroundColor: Colors.amber,shape: StadiumBorder()),
